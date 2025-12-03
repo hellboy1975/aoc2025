@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""Advent of Code 2025 CLI runner."""
+
+import argparse
+import sys
+from runner import run_day
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Advent of Code 2025")
+    parser.add_argument(
+        "--day", "-d",
+        type=int,
+        required=True,
+        help="Day number (1-12)"
+    )
+    parser.add_argument(
+        "--part", "-p",
+        type=int,
+        choices=[1, 2],
+        required=True,
+        help="Part number (1 or 2)"
+    )
+    parser.add_argument(
+        "--test", "-t",
+        action="store_true",
+        help="Use test input instead of real input"
+    )
+
+    args = parser.parse_args()
+
+    if not 1 <= args.day <= 12:
+        print(f"Error: Day must be between 1 and 12, got {args.day}")
+        sys.exit(1)
+
+    result = run_day(args.day, args.part, args.test)
+    sys.exit(0 if result else 1)
+
+
+if __name__ == "__main__":
+    main()
