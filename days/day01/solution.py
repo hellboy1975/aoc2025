@@ -40,5 +40,39 @@ class Day(BaseDay):
 
     def part2(self):
         """Solve part 2."""
-        # TODO: Implement part 2
-        raise NotImplementedError("Part 2 not yet implemented")
+        cursor = DialCursor(100)
+        dial = list(range(100))
+        zeros = 0
+        previous = 50
+        current = 0
+
+        for line in self.lines:
+            direction = line[0]  # 'L' or 'R'
+            distance = int(line[1:])  # e.g., 68
+            
+            if direction == 'L':
+                distance *= -1
+
+             # Count full rotations first
+            full_rotations = abs(distance) // 100
+            zeros += full_rotations
+
+            # Move cursor and check for zero crossing in remainder
+            cursor.move(distance)
+            current = cursor.get(dial)
+
+            # Check if we crossed zero (excluding full rotations)
+            remainder = abs(distance) % 100
+            if remainder > 0:
+                if direction == 'L' and current > previous:
+                    zeros += 1
+                elif direction == 'R' and current < previous:
+                    zeros += 1
+
+            # Landing exactly on zero
+            if current == 0:
+                zeros += 1
+
+            previous = current
+
+        return zeros
