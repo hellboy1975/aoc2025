@@ -69,10 +69,6 @@ class Day(BaseDay):
                 elif direction == 'R' and current < previous:
                     zeros += 1
 
-            # Landing exactly on zero
-            if current == 0:
-                zeros += 1
-
             previous = current
 
         return zeros
