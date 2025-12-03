@@ -37,9 +37,47 @@ class Day(BaseDay):
                 zeros += 1
 
         return zeros
-
+    
     def part2(self):
-        """Solve part 2."""
+        """
+        Solve part 2 - attempt 2
+        This one gets the correct answer.  It's a bit simpler than the other attempt, just rotates 
+        one click at a time and matches zeros
+        This solution takes 108.715ms compared to the broken "solution" in part2_busted - which completes in 1.787ms
+        It's likely adding code to count the >100 numbers could speed this up quite a bit, but I'd rather move onto Day 2
+        """
+        cursor = DialCursor(100)
+        dial = list(range(100))
+        zeros = 0
+        graph = ""
+
+        for line in self.lines:
+            direction = line[0]  # 'L' or 'R'
+            distance = int(line[1:])  # e.g., 68
+
+            direction = -1 if direction == "L" else 1
+            graph = ""
+            for i in range(distance):
+                cursor.move(direction * 1)
+                if cursor.get(dial) == 0:
+                    zeros += 1
+                    graph += "🟩"
+                else:
+                    graph += "🟥"
+
+            print(f"{line}|{cursor.get(dial)} {graph}")
+        return zeros
+
+
+    def part2_busted(self):
+        """
+        Solve part 2 - attempt 1
+        Tried to work it out in an efficient manner initially, building on the approach
+        for part 1.  I just couldn't get this to return the right answer.  
+        There's a bug somewhere, but wasn't able to spot it.  It returns an answer 7
+        less than the right answer.
+        """
+
         cursor = DialCursor(100)
         dial = list(range(100))
         zeros = 0
