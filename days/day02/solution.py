@@ -5,10 +5,11 @@ from base import Day as BaseDay
 def int_len(num):
     return len(str(abs(num)))  
 
+# credit to this stack overflow post:  
+# https://stackoverflow.com/questions/29481088/how-can-i-tell-if-a-string-repeats-itself-in-python/29482936#29482936
 def repeating_strings(s):
         i = (s+s).find(s, 1, -1)
         return None if i == -1 else s[:i]
-
 
 class Day(BaseDay):
     """Solution for Day 02."""
@@ -25,8 +26,6 @@ class Day(BaseDay):
         second_half = int(num_str[mid:])
         
         return first_half, second_half
-    
-    
 
     def check_invalid(self, id):
         """ checks an ID to see if it's invalid"""
@@ -56,8 +55,6 @@ class Day(BaseDay):
                     total += i
 
         return total
-
-        
 
     def part2(self):
         """Solve part 2."""
